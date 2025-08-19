@@ -8,7 +8,7 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                git 'https://github.com/alexdbrrr/devops-python-app.git'
+                git 'https://github.com/Dorbe16/devops-python-app.git'
             }
         }
 

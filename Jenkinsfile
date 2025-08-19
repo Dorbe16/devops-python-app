@@ -14,9 +14,11 @@ pipeline {
 
         stage('Docker Build & Push') {
             steps {
-                sh 'docker build -t $DOCKER_IMAGE .'
-                sh 'docker login -u $DOCKER_HUB_USER -p $DOCKER_HUB_PASS'
-                sh 'docker push $DOCKER_IMAGE'
+                withCredentials([usernamePassword(credentialsId: 'docker-hub-credentials', usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASS')]) {
+                    sh 'docker build -t $DOCKER_IMAGE .'
+                    sh 'echo $DOCKER_PASS | docker login -u $DOCKER_USER --password-stdin'
+                    sh 'docker push $DOCKER_IMAGE'
+                }
             }
         }
 
